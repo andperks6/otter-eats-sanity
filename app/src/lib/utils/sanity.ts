@@ -28,12 +28,74 @@ export async function getPost(slug: string): Promise<Post> {
 	});
 }
 
-export interface Post {
-	_type: 'post';
+export async function getRecipes(): Promise<Recipe[]> {
+	return await client.fetch(
+		groq`*[_type == "recipe" && defined(slug.current)] | order(_createdAt desc)
+		{title, _type, slug, excerpt, categories, techniques[]->{title}, mainImage, _createdAt}
+		[0...100]`
+	);
+}
+
+export async function getRecipe(slug: string): Promise<Recipe> {
+	return await client.fetch(groq`*[_type == "recipe" && slug.current == $slug][0]
+		{title, slug, excerpt, mainImage, categories, tags, _createdAt, ingredients, body,
+		techniques[]->, relatedRecipies[]->{title, slug, mainImage}}`,{
+			slug
+		});
+}
+
+export async function getTechniques(): Promise<Technique[]> {
+	return await client.fetch(
+		groq`*[_type == "technique" && defined(slug.current)] | order(_createdAt desc)`
+	);
+}
+
+export async function getTechnique(slug: string): Promise<Technique> {
+	return await client.fetch(groq`*[_type == "technique" && slug.current == $slug][0]`, {
+		slug
+	});
+}
+
+export interface Content {
 	_createdAt: string;
 	title?: string;
 	slug: Slug;
-	excerpt?: string;
 	mainImage?: ImageAsset;
 	body: PortableTextBlock[];
+}
+export interface Post extends Content {
+	_type: 'post';
+	slug: Slug;
+	excerpt?: string;
+}
+
+const categories = ['breads', 'breakfasts', 'lunches', 'dinners', 'drinks'] as const
+type Category = typeof categories[number]
+
+export interface Recipe extends Content{
+	_type: 'recipe';
+	excerpt?: string;
+	ingredients?: Ingredient[];
+	tags: string[];
+	categories: Category[];
+	techniques: Technique[];
+	relatedRecipes: Reference[];
+}
+
+interface Reference {
+	_type: 'reference',
+	_ref: string
+}
+
+interface Ingredient {
+	_type: 'ingredient';
+	_key: string;
+	name: string;
+	quantity: number;
+	unit?: string;
+}
+
+export interface Technique extends Content{
+	_type: 'technique';
+	relatedRecipes: Reference[];
 }
