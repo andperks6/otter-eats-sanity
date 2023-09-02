@@ -20,7 +20,6 @@
 	{/if}
 	<div class="post__container">
 		<h1 class="post__title">{data.title}</h1>
-		<p class="post__excerpt">{data.excerpt ?? ''}</p>
 		<p class="post__date">
 			{formatDate(data._createdAt)}
 		</p>
@@ -31,15 +30,15 @@
 </section>
 
 <div>
-	<h1 class="text-lg">Techniques</h1>
+	<h1 class="text-lg">Recipes</h1>
 	<div class="carousel carousel-center rounded-box">
-		{#each data.techniques as technique}
+		{#each data.recipes as recipe}
 		<div class="carousel-item">
 			<div class="card card-compact w-96 bg-base-100 shadow-xl">
-				<figure><img src={urlFor(technique.mainImage).url()} alt={technique.title} /></figure>
+				<figure><img src={urlFor(recipe.mainImage).url()} alt={recipe.title} /></figure>
 				<div class="card-body">
-				  <h2 class="card-title">{technique.title}</h2>
-				  <PortableText value={technique.body ?? ''} />
+				  <h2 class="card-title">{recipe.title}</h2>
+				  <PortableText value={recipe.body ?? ''} />
 				  <div class="card-actions justify-end">
 					<button class="btn btn-primary">Buy Now</button>
 				  </div>

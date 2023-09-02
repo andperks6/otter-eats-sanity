@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PortableText } from '@portabletext/svelte';
+	// import { Portabl } from '@portabletext/svelte';
 	import { formatDate } from '$lib/utils';
 	import { urlFor } from '$lib/utils/image';
 	import type { PageData } from './$types';
@@ -24,7 +24,7 @@
 			{formatDate(data._createdAt)}
 		</p>
 		<div class="post__content">
-			<PortableText value={data.body} />
+			<!-- <PortableText value={data.body} /> -->
 		</div>
 	</div>
 </section>
