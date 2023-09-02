@@ -3,6 +3,7 @@
 	import { formatDate } from '$lib/utils';
 	import { urlFor } from '$lib/utils/image';
 	import type { PageData } from './$types';
+	import CustomDefaultListItem from '$lib/CustomDefaultListItem.svelte';
 
 	export let data: PageData;
 </script>
@@ -25,7 +26,14 @@
 			{formatDate(data._createdAt)}
 		</p>
 		<div class="post__content">
-			<PortableText value={data.body ?? ''} />
+			<PortableText value={data.body ?? ''} 
+			components={{
+				listItem: {
+					bullet: CustomDefaultListItem,
+					number: CustomDefaultListItem,
+				}
+			}}
+			/>
 		</div>
 	</div>
 </section>
@@ -41,9 +49,16 @@
 				{/if}
 				<div class="card-body">
 				  <h2 class="card-title">{technique.title}</h2>
-				  <PortableText value={technique.body ?? ''} />
+				  <PortableText value={technique.body ?? ''}
+				  components={{
+					listItem: {
+						bullet: CustomDefaultListItem,
+            			number: CustomDefaultListItem,
+					}
+					}} 
+				  />
 				  <div class="card-actions justify-end">
-					<button class="btn btn-primary">Buy Now</button>
+					<button class="btn btn-primary">Other recipes with this technique</button>
 				  </div>
 				</div>
 			  </div>

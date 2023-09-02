@@ -4,7 +4,10 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [require('daisyui')],
+  corePlugins: {
+    aspectRatio: false,
+  },
+  plugins: [require('daisyui'), require('@tailwindcss/aspect-ratio')],
   daisyui: {
     themes: ["aqua", "autumn", "pastel"],
   },
