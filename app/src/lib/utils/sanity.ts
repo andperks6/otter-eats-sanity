@@ -28,18 +28,18 @@ export async function getPost(slug: string): Promise<Post> {
 	});
 }
 
-export async function getRecipes(): Promise<Recipe[]> {
+export async function getRecipes(count: number=100): Promise<Recipe[]> {
 	return await client.fetch(
 		groq`*[_type == "recipe" && defined(slug.current)] | order(_createdAt desc)
-		{title, _type, slug, excerpt, categories, techniques[]->{title}, mainImage, _createdAt}
-		[0...100]`
+		{title, _type, slug, tags, excerpt, categories, techniques[]->{title}, mainImage, _createdAt}
+		[0...${count}]`
 	);
 }
 
 export async function getRecipe(slug: string): Promise<Recipe> {
 	return await client.fetch(groq`*[_type == "recipe" && slug.current == $slug][0]
 		{title, slug, excerpt, mainImage, categories, tags, _createdAt, ingredients, body,
-		techniques[]->, relatedRecipies[]->{title, slug, mainImage}}`,{
+		techniques[]->, relatedRecipes[]->{title, slug, mainImage}}`,{
 			slug
 		});
 }
@@ -79,7 +79,7 @@ export interface Recipe extends Content{
 	tags: string[];
 	categories: Category[];
 	techniques: Technique[];
-	relatedRecipes: Reference[];
+	relatedRecipes: Recipe[];
 }
 
 interface Reference {
@@ -97,5 +97,5 @@ interface Ingredient {
 
 export interface Technique extends Content{
 	_type: 'technique';
-	relatedRecipes: Reference[];
+	relatedRecipes: Recipe[];
 }
