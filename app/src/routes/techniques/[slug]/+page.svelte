@@ -4,75 +4,48 @@
 	import { urlFor } from '$lib/utils/image';
 	import type { PageData } from './$types';
 	import CustomDefaultListItem from '$lib/CustomDefaultListItem.svelte';
+	import AdjacentCollection from '../../recipes/[slug]/AdjacentCollection.svelte';
 
 	export let data: PageData;
 </script>
 
+<div
+	class="flex flex-col lg:flex-row flex-nowrap justify-around m-2 lg:mt-10 border-b-4 border-primary"
+>
+	<article class=" basis-5/6 py-6 prose xl:prose-lg w-full flex-grow">
+		<h1 class="mb-2">
+			{data.title}
+		</h1>
+		<div class="flex flex-row justify-start gap-4">
+			<span class="badge badge-outline justify-end">{formatDate(data._createdAt)}</span>
+		</div>
 
-<section class="post">
-	{#if data.mainImage}
-		<img
-			class="post__cover"
-			src={urlFor(data.mainImage).url()}
-			alt="Cover image for {data.title}"
-		/>
-	{:else}
-		<div class="post__cover--none" />
-	{/if}
-	<div class="post__container">
-		<h1 class="post__title">{data.title}</h1>
-		<p class="post__date">
-			{formatDate(data._createdAt)}
-		</p>
-		<div class="post__content">
-			<PortableText value={data.body ?? ''} 
+		{#if data.mainImage}
+			<figure class="flex justify-center my-4">
+				<img
+					src={urlFor(data.mainImage).width(600).height(800).url()}
+					alt={data.title}
+					class="object-fill h-auto md:max-w-md lg:max-w-full rounded bg-base-200"
+				/>
+			</figure>
+		{/if}
+
+		<div class=" bg-base-200">
+			<PortableText
+				value={data.body ?? ''}
 				components={{
 					listItem: {
 						bullet: CustomDefaultListItem,
-            			number: CustomDefaultListItem,
+						number: CustomDefaultListItem
 					}
 				}}
 			/>
 		</div>
+		<div />
+	</article>
+	<div class="basis-1 md:basis-1/6">
+		{#if data.relatedRecipes}
+			<AdjacentCollection contents={data.relatedRecipes} type="recipe" title="Related Recipes" />
+		{/if}
 	</div>
-</section>
-
-<div>
-	<h1 class="text-lg">Recipes</h1>
-	<div class="carousel carousel-center rounded-box">
-		{#each data.recipes as recipe}
-		<div class="carousel-item">
-			<div class="card card-compact w-96 bg-base-100 shadow-xl">
-				<figure><img src={urlFor(recipe.mainImage).url()} alt={recipe.title} /></figure>
-				<div class="card-body">
-				  <h2 class="card-title">{recipe.title}</h2>
-				  <PortableText value={recipe.body ?? ''} />
-				  <div class="card-actions justify-end">
-					<button class="btn btn-primary">Buy Now</button>
-				  </div>
-				</div>
-			  </div>
-		</div> 
-		{/each}
-	 </div>
 </div>
-<!-- <div class="flex justify-center">
-    <div class="py-6 prose lg:prose-lg">
-		{#if data.mainImage}
-		<figure class="flex justify-center">
-                <img src={urlFor(data.mainImage).url().width(500).height(300).url()} alt={data.title}  class="object-fill h-auto md:max-w-md max-w-screen  rounded bg-base-200" />
-            </figure>
-        {/if}
-        <h1>{data.title}</h1>
-	
-        <div class="flex gap-3">
-            <span class="badge badge-ghost">
-               { formatDate(data._createdAt)}
-            </span>
-			<span class="text-md text-base-content/70">{data.excerpt}</span>
-
-        </div>
-        <div>
-        </div>
-    </div>
-</div> -->

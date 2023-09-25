@@ -1,6 +1,6 @@
 import { getTechniques } from '$lib/utils/sanity';
 import { error } from '@sveltejs/kit';
-import type { PageData, PageLoad } from './$types';
+import type { PageLoad } from './$types';
 
 export const load = (async () => {
 	const techniques = await getTechniques();
