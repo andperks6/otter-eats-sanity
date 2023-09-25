@@ -8,6 +8,9 @@ dependencies:
   '@sanity/vision':
     specifier: ^3.16.2
     version: 3.16.2(@babel/runtime@7.22.11)(@codemirror/lint@6.4.1)(@codemirror/state@6.2.1)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.0.4)(codemirror@6.0.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)
+  parse-ingredient:
+    specifier: ^1.0.1
+    version: 1.0.1
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -5057,6 +5060,11 @@ packages:
       path-key: 3.1.1
     dev: false
 
+  /numeric-quantity@2.0.0:
+    resolution: {integrity: sha512-LTglawHdO/SLbAYU49nlDdDKyqPpyCYD210cqqApQ9YEEHHs0n3AqRbAmakFmo3ssZYk4CKwdsNHGdcIkZ6Opw==}
+    engines: {node: '>=16'}
+    dev: false
+
   /nwsapi@2.2.7:
     resolution: {integrity: sha512-ub5E4+FBPKwAZx0UwIQOjYWGHTEq5sPqHQNRN8Z9e4A7u3Tj1weLJsL59yH9vmvqEtBHaOmT6cYQKIZOxp35FQ==}
     dev: false
@@ -5246,6 +5254,13 @@ packages:
 
   /parse-headers@2.0.5:
     resolution: {integrity: sha512-ft3iAoLOB/MlwbNXgzy43SWGP6sQki2jQvAyBg/zDFAgr9bfNWZIUj42Kw2eJIl8kEi4PbgE6U1Zau/HwI75HA==}
+    dev: false
+
+  /parse-ingredient@1.0.1:
+    resolution: {integrity: sha512-ernHcrGx0LKPyqbtxmyHEaUeLtFaxkAtYQkT31cvjATcIgOFEM/zmqUNmHIwvyw19Rlj5Di7mY9Hh36mYjLFeQ==}
+    engines: {node: '>=10'}
+    dependencies:
+      numeric-quantity: 2.0.0
     dev: false
 
   /parse-json@5.2.0:

@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
+import { CustomIngredientInput } from '../components/IngredientInput';
 
 export default defineType({
   name: 'recipe',
@@ -37,21 +38,24 @@ export default defineType({
     defineField({
       name: 'ingredients',
       title: 'Ingredients',
+      components: {
+        input: CustomIngredientInput
+      },
+      
       type: 'array',
       of: [
         {
           title: 'Ingredient',
           name: 'ingredient',
           type: 'object',
-          options: {
-            columns: 3,
-            collapsible: true
-          },
+
           fields: [
-            {name: 'name', type: 'string', title: 'Name'},
-            {name: 'quantity', type: 'number', title: 'Quantity', validation: (Rule) => Rule.precision(2)},
-            {name: 'unit', type: 'string', title: 'Unit'}
-        
+            {name: 'quantity', type: 'number' },
+            {name: 'quantity2', type: 'number'  },
+            {name: 'unitOfMeasureID', type: 'string' },
+            {name: 'unitOfMeasure', type: 'string' },
+            {name: 'description', type: 'string' },
+            {name: 'isGroupHeader', type: 'boolean' },
           ]
         }
       ]
@@ -103,8 +107,8 @@ export default defineType({
       ]
     }),
     defineField({
-      name: 'relatedRecipies',
-      title: 'Related Recipies',
+      name: 'relatedRecipes',
+      title: 'Related Recipes',
       type: 'array',
       of: [
         defineArrayMember({
