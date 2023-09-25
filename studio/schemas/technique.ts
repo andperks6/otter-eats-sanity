@@ -34,8 +34,8 @@ export default defineType({
             type: 'blockContent',
         }),
         defineField({
-            name: 'relatedRecipies',
-            title: 'Recipies',
+            name: 'relatedRecipes',
+            title: 'Recipes',
             type: 'array',
             of: [
                 defineArrayMember({
