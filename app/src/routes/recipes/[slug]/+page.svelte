@@ -1,88 +1,82 @@
 <script lang="ts">
+	import AdjacentCollection from './AdjacentCollection.svelte';
+
 	import { PortableText } from '@nermolov/svelte-portabletext';
 	import { formatDate } from '$lib/utils';
 	import { urlFor } from '$lib/utils/image';
 	import type { PageData } from './$types';
 	import CustomDefaultListItem from '$lib/CustomDefaultListItem.svelte';
+	import { each } from 'svelte/internal';
 
 	export let data: PageData;
+
+	$: categories = data.categories ?? [];
+	$: tags = data.tags ?? [];
 </script>
 
+<div
+	class="flex flex-col lg:flex-row flex-nowrap justify-around m-2 lg:mt-10 border-b-4 border-primary"
+>
+	<article class=" basis-5/6 py-6 prose xl:prose-lg w-full flex-grow">
+		<h1 class="mb-2">
+			{data.title}
+		</h1>
+		<div class="flex flex-row justify-start gap-4">
+			<span class="badge badge-outline justify-end">{formatDate(data._createdAt)}</span>
 
-<section class="post">
-	{#if data.mainImage}
-		<img
-			class="post__cover"
-			src={urlFor(data.mainImage).url()}
-			alt="Cover image for {data.title}"
-		/>
-	{:else}
-		<div class="post__cover--none" />
-	{/if}
-	<div class="post__container">
-		<h1 class="post__title">{data.title}</h1>
-		<p class="post__excerpt">{data.excerpt ?? ''}</p>
-		<p class="post__date">
-			{formatDate(data._createdAt)}
-		</p>
-		<div class="post__content">
-			<PortableText value={data.body ?? ''} 
-			components={{
-				listItem: {
-					bullet: CustomDefaultListItem,
-					number: CustomDefaultListItem,
-				}
-			}}
-			/>
+			{#each categories as cat}
+				<div class="badge badge-primary">{cat}</div>
+			{/each}
+
+			{#each tags as tag}
+				<div class="badge badge-secondary">{tag}</div>
+			{/each}
 		</div>
-	</div>
-</section>
+		<div class=" border-b-2 border-base-300">
+			<p class="text-md text-base-content/70 my-4">{data.excerpt ?? ''}</p>
+		</div>
 
-<div>
-	<h1 class="text-lg">Techniques</h1>
-	<div class="carousel carousel-center rounded-box">
-		{#each data.techniques as technique}
-		<div class="carousel-item">
-			<div class="card card-compact w-96 bg-base-100 shadow-xl">
-				{#if technique.mainImage}
-				<figure><img src={urlFor(technique.mainImage).url()} alt={technique.title} /></figure>
-				{/if}
-				<div class="card-body">
-				  <h2 class="card-title">{technique.title}</h2>
-				  <PortableText value={technique.body ?? ''}
-				  components={{
+		{#if data.mainImage}
+			<figure class="flex justify-center my-4">
+				<img
+					src={urlFor(data.mainImage).width(600).height(800).url()}
+					alt={data.title}
+					class="object-fill h-auto md:max-w-md lg:max-w-full rounded bg-base-200"
+				/>
+			</figure>
+		{/if}
+
+		<h2>Ingredients</h2>
+		{#if data.ingredients}
+		<ul>
+			{#each data.ingredients as ingredient}
+			<li>{ingredient.quantity} {ingredient.unit} {ingredient.name}</li>
+			{/each}
+		</ul>
+		{/if}
+		<div class=" bg-base-200">
+			<h2>Instructions</h2>
+			<PortableText
+				value={data.body ?? ''}
+				components={{
 					listItem: {
 						bullet: CustomDefaultListItem,
-            			number: CustomDefaultListItem,
+						number: CustomDefaultListItem
 					}
-					}} 
-				  />
-				  <div class="card-actions justify-end">
-					<button class="btn btn-primary">Other recipes with this technique</button>
-				  </div>
-				</div>
-			  </div>
-		</div> 
-		{/each}
-	 </div>
-</div>
-<!-- <div class="flex justify-center">
-    <div class="py-6 prose lg:prose-lg">
-		{#if data.mainImage}
-		<figure class="flex justify-center">
-                <img src={urlFor(data.mainImage).url().width(500).height(300).url()} alt={data.title}  class="object-fill h-auto md:max-w-md max-w-screen  rounded bg-base-200" />
-            </figure>
-        {/if}
-        <h1>{data.title}</h1>
-	
-        <div class="flex gap-3">
-            <span class="badge badge-ghost">
-               { formatDate(data._createdAt)}
-            </span>
-			<span class="text-md text-base-content/70">{data.excerpt}</span>
+				}}
+			/>
+		</div>
+		<div />
+	</article>
 
-        </div>
-        <div>
-        </div>
-    </div>
-</div> -->
+	<div class="basis-1 md:basis-1/6">
+		<div class="flex flex-col">
+			{#if data.relatedRecipes}
+				<AdjacentCollection contents={data.relatedRecipes} type="recipe" title="Related Recipes" />
+			{/if}
+			{#if data.techniques}
+				<AdjacentCollection contents={data.techniques} type="technique" title="Techniques" />
+			{/if}
+		</div>
+	</div>
+</div>
