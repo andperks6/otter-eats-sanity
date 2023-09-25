@@ -1,3 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.cardLink { opacity: 1; transition: all .2s }
+.cardLink:hover { opacity: .9 ; filter: brightness(90%); transform: scale(1.04) }
