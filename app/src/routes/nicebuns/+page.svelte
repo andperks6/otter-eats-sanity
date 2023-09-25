@@ -10,8 +10,8 @@
 				quasi. In deleniti eaque aut repudiandae et a id nisi.
 			</p>
 		</div>
-		<div class="card flex-shrink-0 w-full lg:w-3/5 shadow-2xl bg-base-100 bg-transparent">
-			<div class="card-body aspect-w-8 aspect-h-8 ">
+		<div class=" flex-shrink-0 w-full lg:w-3/5 shadow-2xl bg-base-100 bg-transparent">
+			<div class="aspect-w-8 aspect-h-8 ">
 				<iframe
 					allowtransparency={true}
 					title="Nice Buns Order"
