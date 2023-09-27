@@ -1,23 +1,23 @@
 <script lang="ts">
-	import AdjacentCollection from './AdjacentCollection.svelte';
-
 	import { PortableText } from '@nermolov/svelte-portabletext';
 	import { formatDate } from '$lib/utils';
 	import { urlFor } from '$lib/utils/image';
 	import type { PageData } from './$types';
+	import AdjacentCollection from './AdjacentCollection.svelte';
 	import CustomDefaultListItem from '$lib/CustomDefaultListItem.svelte';
-	import { each } from 'svelte/internal';
+	import Ingredients from './Ingredients.svelte';
 
 	export let data: PageData;
 
 	$: categories = data.categories ?? [];
 	$: tags = data.tags ?? [];
+
 </script>
 
 <div
 	class="flex flex-col lg:flex-row flex-nowrap justify-around m-2 lg:mt-10 border-b-4 border-primary"
 >
-	<article class=" basis-5/6 py-6 prose xl:prose-lg w-full flex-grow">
+	<article class=" basis-5/6 py-6 prose xl:prose-lg w-full flex-grow ">
 		<h1 class="mb-2">
 			{data.title}
 		</h1>
@@ -45,16 +45,12 @@
 				/>
 			</figure>
 		{/if}
+		
+		<div class="bg-base-200 px-10">
 
-		<h2>Ingredients</h2>
 		{#if data.ingredients}
-		<ul>
-			{#each data.ingredients as ingredient}
-			<li>{ingredient.quantity} {ingredient.unit} {ingredient.name}</li>
-			{/each}
-		</ul>
+			<Ingredients data={data.ingredients}></Ingredients>
 		{/if}
-		<div class=" bg-base-200">
 			<h2>Instructions</h2>
 			<PortableText
 				value={data.body ?? ''}

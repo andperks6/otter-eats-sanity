@@ -4,6 +4,7 @@ import type { ImageAsset, Slug } from '@sanity/types';
 import groq from 'groq';
 
 import { PUBLIC_SANITY_DATASET, PUBLIC_SANITY_PROJECT_ID } from '$env/static/public';
+import type { Ingredient } from 'parse-ingredient';
 
 if (!PUBLIC_SANITY_PROJECT_ID || !PUBLIC_SANITY_DATASET) {
 	throw new Error('Did you forget to run sanity init --env?');
@@ -87,13 +88,13 @@ interface Reference {
 	_ref: string
 }
 
-interface Ingredient {
-	_type: 'ingredient';
-	_key: string;
-	name: string;
-	quantity: number;
-	unit?: string;
-}
+// interface Ingredient {
+// 	_type: 'ingredient';
+// 	_key: string;
+// 	name: string;
+// 	quantity: number;
+// 	unit?: string;
+// }
 
 export interface Technique extends Content{
 	_type: 'technique';

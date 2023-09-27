@@ -6,8 +6,6 @@ import { useCallback, useMemo } from 'react';
 export const CustomIngredientInput = (props) => {
     const { elementProps, onChange, value = [] } = props
 
-
-
     const handleChange = useCallback((event) => {
         const nextValue = event.currentTarget.value
         const ingredients = parseIngredient(nextValue).map((i) => {
