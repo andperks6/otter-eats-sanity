@@ -13,7 +13,7 @@ export default {
   require('daisyui'), 
 ],
   daisyui: {
-    themes: ["aqua", "autumn", "pastel"],
+    themes: ["aqua", "autumn", "pastel","winter", "cupcake",],
   },
 }
 
