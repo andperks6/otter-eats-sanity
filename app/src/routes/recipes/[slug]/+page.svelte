@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PortableText } from '@nermolov/svelte-portabletext';
+	import { PortableText } from '@portabletext/svelte';
 	import { formatDate } from '$lib/utils';
 	import { urlFor } from '$lib/utils/image';
 	import type { PageData } from './$types';
