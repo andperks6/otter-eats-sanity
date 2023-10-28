@@ -19,7 +19,7 @@
 		"parse-ingredient": "^1.0.1"
 	},
 	"devDependencies": {
-		"@portabletext/svelte": "^2.1.0",
+		"@portabletext/svelte": "^2.1.4",
 		"@portabletext/types": "^2.0.6",
 		"@sanity/types": "^3.16.2",
 		"@sveltejs/adapter-auto": "^2.1.0",
