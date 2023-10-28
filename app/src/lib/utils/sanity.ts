@@ -29,6 +29,12 @@ export async function getPost(slug: string): Promise<Post> {
 	});
 }
 
+export async function getPage(slug: string): Promise<Page> {
+	return await client.fetch(groq`*[_type == "page" && slug.current == $slug][0]`, {
+		slug
+	});
+}
+
 export async function getRecipes(count: number=100): Promise<Recipe[]> {
 	return await client.fetch(
 		groq`*[_type == "recipe" && defined(slug.current)] | order(_createdAt desc)
@@ -57,6 +63,20 @@ export async function getTechnique(slug: string): Promise<Technique> {
 	});
 }
 
+export async function getTechniqueWithLinks(slug: string): Promise<TechniqueWithLinks> {
+	return await client.fetch(groq`*[_type == "technique" && slug.current == $slug][0] {
+		...,
+		"backlinks": *[references(^._id) && !(_id in path("drafts.**"))]{ 
+		  title,
+		  _type,
+		  slug,
+		  mainImage,
+		}
+	  }`, {
+		slug
+	});
+}
+
 export interface Content {
 	_createdAt: string;
 	title?: string;
@@ -68,6 +88,14 @@ export interface Post extends Content {
 	_type: 'post';
 	slug: Slug;
 	excerpt?: string;
+}
+
+export interface Page {
+	_type: 'page';
+	slug: Slug;
+	excerpt?: string;
+	link?: string;
+	mainImage?: ImageAsset;
 }
 
 const categories = ['breads', 'breakfasts', 'lunches', 'dinners', 'drinks'] as const
@@ -99,4 +127,9 @@ interface Reference {
 export interface Technique extends Content{
 	_type: 'technique';
 	relatedRecipes: Recipe[];
+}
+
+export interface TechniqueWithLinks extends Content{
+	_type: 'technique';
+	backlinks: Recipe[];
 }
