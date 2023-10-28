@@ -3,7 +3,7 @@
 	import { formatDate } from '$lib/utils';
 	import { urlFor } from '$lib/utils/image';
 	import type { PageData } from './$types';
-	import AdjacentCollection from './AdjacentCollection.svelte';
+	import AdjacentCollection from '$lib/AdjacentCollection.svelte';
 	import CustomDefaultListItem from '$lib/CustomDefaultListItem.svelte';
 	import Ingredients from './Ingredients.svelte';
 

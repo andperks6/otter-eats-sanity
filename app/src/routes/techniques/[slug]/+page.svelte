@@ -4,7 +4,7 @@
 	import { urlFor } from '$lib/utils/image';
 	import type { PageData } from './$types';
 	import CustomDefaultListItem from '$lib/CustomDefaultListItem.svelte';
-	import AdjacentCollection from '../../recipes/[slug]/AdjacentCollection.svelte';
+	import AdjacentCollection from '$lib/AdjacentCollection.svelte';
 
 	export let data: PageData;
 </script>
@@ -44,8 +44,8 @@
 		<div />
 	</article>
 	<div class="basis-1 md:basis-1/6">
-		{#if data.relatedRecipes}
-			<AdjacentCollection contents={data.relatedRecipes} type="recipe" title="Related Recipes" />
+		{#if data.backlinks}
+			<AdjacentCollection contents={data.backlinks} type="recipe" title="Related Recipes" />
 		{/if}
 	</div>
 </div>
