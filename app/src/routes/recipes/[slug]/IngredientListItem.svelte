@@ -3,7 +3,6 @@
     import { formatQuantity } from 'format-quantity';
 
     export let ingredient: Ingredient
-    console.log(ingredient)
 </script>
 
 <li>

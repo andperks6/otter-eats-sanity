@@ -79,7 +79,7 @@ export async function getTechniqueWithLinks(slug: string): Promise<TechniqueWith
 
 export interface Content {
 	_createdAt: string;
-	title?: string;
+	title: string;
 	slug: Slug;
 	mainImage?: ImageAsset;
 	body: PortableTextBlock[];

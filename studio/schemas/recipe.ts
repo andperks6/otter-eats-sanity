@@ -10,6 +10,7 @@ export default defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'slug',
@@ -80,6 +81,7 @@ export default defineType({
       name: 'categories',
       type: 'array',
       of: [{type: 'string'}],
+      initialValue: [],
       options: {
         layout: 'grid',
         list: [
